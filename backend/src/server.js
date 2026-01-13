@@ -17,7 +17,10 @@ const server = http.createServer(app);
 const io = new SocketIOServer(server, { cors: getSocketCorsConfig() });
 initSocket(io);
 
-app.use(helmet());
+app.use(helmet({
+  crossOriginEmbedderPolicy: false,
+  crossOriginResourcePolicy: { policy: "cross-origin" }
+}));
 app.use(cors({ origin: env.clientOrigin, credentials: true }));
 app.use(express.json());
 app.use(cookieParser());

@@ -5,7 +5,7 @@ import { env } from "../config/env.js";
 
 const cookieOptions = {
   httpOnly: true,
-  sameSite: "lax",
+  sameSite: env.nodeEnv === "production" ? "none" : "lax",
   secure: env.nodeEnv === "production",
   maxAge: 7 * 24 * 60 * 60 * 1000
 };
@@ -43,7 +43,7 @@ export const login = async (req, res, next) => {
 export const logout = (req, res) => {
   res.clearCookie(env.cookieName, {
     httpOnly: true,
-    sameSite: "lax",
+    sameSite: env.nodeEnv === "production" ? "none" : "lax",
     secure: env.nodeEnv === "production"
   });
   res.json({ message: "Logged out" });
